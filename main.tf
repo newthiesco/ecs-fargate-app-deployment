@@ -241,15 +241,15 @@ resource "aws_ecs_task_definition" "app_task" {
 # 6. ECS Service (Fargate)
 #---------------------------------------------
 resource "aws_ecs_service" "app_service" {
-  name            = "webapp-service-${local.env_suffix}"
-  cluster         = aws_ecs_cluster.app_cluster.id
-  task_definition = aws_ecs_task_definition.app_task.arn
-  desired_count   = var.desired_count
-  launch_type     = "FARGATE"
+  name             = "webapp-service-${local.env_suffix}"
+  cluster          = aws_ecs_cluster.app_cluster.id
+  task_definition  = aws_ecs_task_definition.app_task.arn
+  desired_count    = var.desired_count
+  launch_type      = "FARGATE"
   platform_version = "LATEST"
 
   network_configuration {
-    subnets          = var.public_subnets
+    subnets = var.public_subnets
     # include task SG (ensures egress); keep user's app_sg_id if additional rules required
     security_groups  = [aws_security_group.app_task_sg.id, var.app_sg_id]
     assign_public_ip = true

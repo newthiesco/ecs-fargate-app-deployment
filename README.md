@@ -46,19 +46,9 @@ You need to run a containerized web application in production without managing E
 **Create an S3 Bucket:** _aws s3api create-bucket --bucket tf-state- --region us-east-1_ # Optional, only required if you want Terraform state file to be stored on an S3 bucket
 
 **Optional, only required if you want Terraform state file locking enabled**
-**Create DynamoDB table for state locking:** _aws dynamodb create-table --table-name tf-locks --attribute-definitions AttributeName=LockID,AttributeType=S --key-schema AttributeName=LockID,KeyType=HASH --provisioned-throughput ReadCapacityUnits=1,WriteCapacityUnits=1 --region us-east-1_
-
-**Explanation of the different command flags:**
-
---table-name tf-locks → Name of the DynamoDB table
-
---attribute-definitions → Defines LockID as a string (S)
-
---key-schema → Sets LockID as the partition key (HASH)
-
---provisioned-throughput → 1 read & 1 write per second (enough for Terraform)
-
---region → Region where the table will be created
+**Create DynamoDB table for state locking:** 
+```aws dynamodb create-table --table-name tf-locks --attribute-definitions AttributeName=LockID,AttributeType=S --key-schema AttributeName=LockID,KeyType=HASH --provisioned-throughput ReadCapacityUnits=1,WriteCapacityUnits=1 --region us-east-1
+```
 
 **Install git:** https://git-scm.com/downloads
 
@@ -100,9 +90,9 @@ On the AWS Management Console: Please verify that all the resources have been cr
 
 7.  ECS Task + Service (Fargate)
 
-   To destroy all the resources: terraform destroy -var-file=dev.tfvars -auto-approve
-
-
-
-
+##To destroy all the resources: 
+   ```
+   terraform destroy -var-file=dev.tfvars -auto-approve
+   ```
+**Note: Please make sure to destroy all the resources to avoid any unwanted costs.**
 
